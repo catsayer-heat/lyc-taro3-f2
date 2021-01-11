@@ -1,6 +1,7 @@
 {
   "name": "lyc-taro3-f2",
-  "version": "0.0.1",
+  "version": "1.0.0",
+  "keywords": ["taro", "taro3", "antv-f2", "f2", "charts", "chart"],
   "private": false,
   "description": "一个关于taro3的antv-f2组件",
   "main": "src/components/F2Canvas/F2Canvas.tsx",

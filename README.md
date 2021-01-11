@@ -1,9 +1,3 @@
----
-title: lyc-taro3-f2
----
-
-[toc!]
-
 # Taro3 图表
 
 目前支持微信小程序、支付宝小程序
@@ -13,10 +7,9 @@ title: lyc-taro3-f2
 
 ## 安装
 
-yarn add lyc-taro3-f2 @antv/f2
+>$ yarn add lyc-taro3-f2 @antv/f2
 
-> @antv/f2 需要手动安装
-
+@antv/f2 需要手动安装
 ## 使用指南
 
 在Taro文件中引入组件
@@ -34,11 +27,9 @@ import F2 from '@antv/f2'
 
 const chart = new F2.Chart(config)
 /*
-  ...
-  ···
-  渲染
-  ...
-  ···
+*
+* 相关渲染函数
+*
 */
 chart.render()
 
@@ -74,7 +65,7 @@ require('@antv/f2/lib/geom/schema'); // 只加载箱型图、股票图
 ````js
 import React, { Component } from 'react'
 import { View } from '@tarojs/components'
-import F2Canvas from '@/components/F2Canvas/F2Canvas'
+import F2Canvas from 'lyc-taro3-f2'
 import './index.scss'
 
 const F2 = require('@antv/f2/lib/core')
@@ -145,12 +136,12 @@ export default class Index extends Component {
     });
     chart.render()
 
-    return chart // 必须返回 required
+    return chart // required
   }
 
   render () {
     return (
-      <View className='index'>
+      <View style="width: 100%; height: 500rpx">
         <F2Canvas
           className="my_canvas"
           onInit={this.onInit.bind(this)}

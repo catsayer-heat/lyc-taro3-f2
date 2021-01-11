@@ -1,6 +1,5 @@
 import React from 'react'
 import Taro, { eventCenter, getCurrentInstance } from '@tarojs/taro'
-// import F2 from '@antv/f2/lib/index-all'
 import { View, Canvas } from '@tarojs/components'
 
 type propsParams = {
@@ -34,8 +33,13 @@ export default class F2Canvas extends React.Component<propsParams> {
     onInit: () => {}
   }
 
-  componentDidMount() {
-    eventCenter.once(getCurrentInstance().router!.onReady, () => {
+  $instance = getCurrentInstance()
+  canvasEl: any
+  chart: any
+
+  componentWillMount() {
+    // https://taro-docs.jd.com/taro/docs/next/react#onready-
+    eventCenter.once(this.$instance.router!.onReady, () => {
       const query = Taro.createSelectorQuery()
 
       query.select('#' + this.props.id)
@@ -79,9 +83,6 @@ export default class F2Canvas extends React.Component<propsParams> {
       canvasEl.dispatchEvent('touchend', wrapEvent(e))
     }
   }
-
-  canvasEl: any
-  chart: any
 
   render() {
     return (
