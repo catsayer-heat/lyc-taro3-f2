@@ -1,0 +1,6 @@
+{
+  "extends": ["taro/react"],
+  "rules": {
+    "eslint/jsx-quotes": ["double", "warn"]
+  }
+}
