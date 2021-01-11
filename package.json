@@ -4,6 +4,10 @@
   "private": false,
   "description": "一个关于taro3的antv-f2组件",
   "main": "src/components/F2Canvas/F2Canvas.tsx",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/catsayer-heat/lyc-taro3-f2"
+  },
   "templateInfo": {
     "name": "default",
     "typescript": true,
