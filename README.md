@@ -8,7 +8,7 @@
 
 ## 安装
 
->$ yarn add lyc-taro3-f2 @antv/f2
+>$ yarn  add  lyc-taro3-f2  @antv/f2
 
 @antv/f2 需要手动安装
 ## 使用指南
