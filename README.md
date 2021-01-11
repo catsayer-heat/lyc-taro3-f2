@@ -3,7 +3,8 @@
 目前支持微信小程序、支付宝小程序
 
 实现方式主要依据：[wx-f2](https://github.com/antvis/wx-f2)
-使用方式请参照：[antv-f2](https://f2.antv.vision/zh/docs/api/f2)
+
+使用方式请参照：[antv-f2文档](https://f2.antv.vision/zh/docs/api/f2)
 
 ## 安装
 
@@ -33,12 +34,12 @@ const chart = new F2.Chart(config)
 */
 chart.render()
 
-return chart // 必须  required
+return chart // required
 `````
 
 ### 按需引入
 
-按需引入部分参考 [antv-f2](https://f2.antv.vision/zh/docs/tutorial/require)
+按需引入部分参考 [antv-f2按需引入](https://f2.antv.vision/zh/docs/tutorial/require)
 
 部分参考代码:
 ````js
