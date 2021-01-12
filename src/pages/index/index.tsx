@@ -3,57 +3,99 @@ import { View } from '@tarojs/components'
 import F2Canvas from '@/components/F2Canvas/F2Canvas'
 import './index.scss'
 
-const F2 = require('@antv/f2/lib/core')
-const Tooltip = require('@antv/f2/lib/plugin/tooltip');
-F2.Chart.plugins.register(Tooltip);
-require('@antv/f2/lib/geom/')
-
+import F2 from '@antv/f2';
 export default class Index extends Component {
   onInit = (config) => {
     const data = [{
-      day: '周一',
-      value: 300
+      time: '2016-08-08 00:00:00',
+      value: 10,
+      type: '预期收益率'
     }, {
-      day: '周二',
-      value: 400
+      time: '2016-08-08 00:10:00',
+      value: 22,
+      type: '预期收益率'
     }, {
-      day: '周三',
-      value: 350
+      time: '2016-08-08 00:30:00',
+      value: 16,
+      type: '预期收益率'
     }, {
-      day: '周四',
-      value: 500
+      time: '2016-08-09 00:35:00',
+      value: 26,
+      type: '预期收益率'
     }, {
-      day: '周五',
-      value: 490
+      time: '2016-08-09 01:00:00',
+      value: 12,
+      type: '预期收益率'
     }, {
-      day: '周六',
-      value: 600
+      time: '2016-08-09 01:20:00',
+      value: 26,
+      type: '预期收益率'
     }, {
-      day: '周日',
-      value: 900
+      time: '2016-08-10 01:40:00',
+      value: 18,
+      type: '预期收益率'
+    }, {
+      time: '2016-08-10 02:00:00',
+      value: 26,
+      type: '预期收益率'
+    }, {
+      time: '2016-08-10 02:20:00',
+      value: 12,
+      type: '预期收益率'
+    }, {
+      time: '2016-08-08 00:00:00',
+      value: 4,
+      type: '实际收益率'
+    }, {
+      time: '2016-08-08 00:10:00',
+      value: 3,
+      type: '实际收益率'
+    }, {
+      time: '2016-08-08 00:30:00',
+      value: 6,
+      type: '实际收益率'
+    }, {
+      time: '2016-08-09 00:35:00',
+      value: -12,
+      type: '实际收益率'
+    }, {
+      time: '2016-08-09 01:00:00',
+      value: 1,
+      type: '实际收益率'
+    }, {
+      time: '2016-08-09 01:20:00',
+      value: 9,
+      type: '实际收益率'
+    }, {
+      time: '2016-08-10 01:40:00',
+      value: 13,
+      type: '实际收益率'
+    }, {
+      time: '2016-08-10 02:00:00',
+      value: -3,
+      type: '实际收益率'
+    }, {
+      time: '2016-08-10 02:20:00',
+      value: 11,
+      type: '实际收益率'
     }];
-    
     const chart = new F2.Chart(config);
-    
     chart.source(data, {
-      value: {
-        tickCount: 5,
-        min: 0
-      },
-      day: {
+      time: {
+        type: 'timeCat',
+        tickCount: 3,
+        mask: 'hh:mm',
         range: [ 0, 1 ]
+      },
+      value: {
+        tickCount: 3,
+        formatter: function formatter(ivalue) {
+          return ivalue + '%';
+        }
       }
     });
-    chart.tooltip({
-      showCrosshairs: true,
-      showItemMarker: false,
-      onShow: function onShow(ev) {
-        const items = ev.items;
-        items[0].name = null;
-        items[0].value = '$ ' + items[0].value;
-      }
-    });
-    chart.axis('day', {
+    chart.axis('time', {
+      line: null,
       label: function label(_text, index, total) {
         const textCfg = { textAlign: 'center' };
         if (index === 0) {
@@ -64,11 +106,32 @@ export default class Index extends Component {
         return textCfg;
       }
     });
-    chart.line().position('day*value');
-    chart.point().position('day*value').style({
-      stroke: '#fff',
-      lineWidth: 1
+    chart.axis('tem', {
+      grid: function grid(text) {
+        if (text === '0%') {
+          return {
+            lineDash: null,
+            lineWidth: 1
+          };
+        }
+      }
     });
+    chart.legend({
+      position: 'bottom',
+      offsetY: -5
+    });
+    chart.line()
+      .position('time*value')
+      .color('type')
+      .shape('type', function(type) {
+        if (type === '预期收益率') {
+          return 'line';
+        }
+        if (type === '实际收益率') {
+          return 'dash';
+        }
+      });
+    
     chart.render();
     return chart
   }
