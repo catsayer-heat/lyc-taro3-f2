@@ -8,23 +8,25 @@
 
 ## 安装
 
->$ yarn add lyc-taro3-f2 @antv/f2
+```
+$ yarn add lyc-taro3-f2 @antv/f2
+```
 
 其中@antv/f2 需要手动安装
 ## 使用指南
 
 在Taro文件中引入组件
 
-````js
+```js
 
 import F2Canvas from 'lyc-taro3-f2'
 import F2 from '@antv/f2'
 
-````
+```
 
 注意：渲染过后必须返回图表示例
 
-````js 
+```js 
 
 const chart = new F2.Chart(config)
 /**
@@ -35,14 +37,14 @@ const chart = new F2.Chart(config)
 chart.render()
 
 return chart // required
-`````
+```
 
 ### 按需引入
 
 按需引入部分参考 [antv-f2按需引入](https://f2.antv.vision/zh/docs/tutorial/require)
 
 部分参考代码:
-````js
+```js
 import F2Canvas from 'lyc-taro3-f2' // required
 
 const F2 = require('@antv/f2/lib/core'); // required
@@ -59,11 +61,11 @@ require('@antv/f2/lib/geom/point'); // 只加载点图
 require('@antv/f2/lib/geom/polygon'); // 只加载色块图
 require('@antv/f2/lib/geom/schema'); // 只加载箱型图、股票图
 
-````
+```
 
 ### 示例
 
-````js
+```jsx
 import React, { Component } from 'react'
 import { View } from '@tarojs/components'
 import F2Canvas from 'lyc-taro3-f2'
@@ -152,7 +154,7 @@ export default class Index extends Component {
   }
 }
 
-````
+```
 
 ## 原理
 

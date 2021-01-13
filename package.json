@@ -1,6 +1,6 @@
 {
   "name": "lyc-taro3-f2",
-  "version": "1.0.0",
+  "version": "1.0.3",
   "keywords": ["taro", "taro3", "antv-f2", "f2", "charts", "chart"],
   "private": false,
   "description": "一个关于taro3的antv-f2组件",
@@ -67,5 +67,6 @@
     "eslint-plugin-react-hooks": "^1.6.1",
     "stylelint": "9.3.0",
     "typescript": "^3.7.0"
-  }
+  },
+  "license": "MIT"
 }
