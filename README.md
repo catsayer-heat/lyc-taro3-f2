@@ -1,6 +1,6 @@
 # Taro3 图表
 
-目前支持微信小程序、支付宝小程序
+目前仅支持微信小程序
 
 实现方式主要依据：[wx-f2](https://github.com/antvis/wx-f2)
 
