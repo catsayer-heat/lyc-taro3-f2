@@ -38,8 +38,7 @@ export default class F2Canvas extends React.Component<propsParams> {
   chart: any
 
   componentWillMount() {
-    // https://taro-docs.jd.com/taro/docs/next/react#onready-
-    eventCenter.once(this.$instance.router!.onReady, () => {
+    setTimeout(() => {
       const query = Taro.createSelectorQuery()
 
       query.select('#' + this.props.id)
@@ -62,7 +61,7 @@ export default class F2Canvas extends React.Component<propsParams> {
             this.canvasEl = chart.get('el')
           }
         })
-    })
+    }, 100)
   }
 
   touchStart(e){

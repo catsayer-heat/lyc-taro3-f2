@@ -7,7 +7,7 @@ import F2 from '@antv/f2';
 export default class Index extends Component {
   onInit = (config) => {
     const data = [{
-      time: '2016-08-08 00:00:00',
+      time: '2016-08-08 00:00:05',
       value: 10,
       type: '预期收益率'
     }, {
@@ -75,7 +75,7 @@ export default class Index extends Component {
       value: -3,
       type: '实际收益率'
     }, {
-      time: '2016-08-10 02:20:00',
+      time: '2016-08-10 02:25:00',
       value: 11,
       type: '实际收益率'
     }];
