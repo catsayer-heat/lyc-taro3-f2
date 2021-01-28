@@ -1,10 +1,13 @@
 import React from 'react'
-import Taro, { eventCenter, getCurrentInstance } from '@tarojs/taro'
-import { View, Canvas } from '@tarojs/components'
+import Taro from '@tarojs/taro'
+import { Canvas } from '@tarojs/components'
+
+import { my as F2Context } from '@antv/f2-context'
 
 type propsParams = {
   id: string
   className: string
+  style: string
   onInit: any
 }
 
@@ -30,38 +33,67 @@ export default class F2Canvas extends React.Component<propsParams> {
   static defaultProps = {
     id: 'f2-canvas-' + randomStr(16),
     className: '',
+    style: '',
     onInit: () => {}
   }
 
-  $instance = getCurrentInstance()
   canvasEl: any
   chart: any
 
   componentWillMount() {
     setTimeout(() => {
-      const query = Taro.createSelectorQuery()
-
-      query.select('#' + this.props.id)
-        .fields({
-          node: true,
-          size: true
-        }).exec(res => {
-          let { node, width, height } = res[0]
-          
-          const context = node.getContext('2d')
-          const pixelRatio = Taro.getSystemInfoSync().pixelRatio
-          // 高清设置
-          node.width = width * pixelRatio
-          node.height = height * pixelRatio
-    
-          const config = { context, width, height, pixelRatio }
-          const chart = this.props.onInit(config)
-          if (chart) {
-            this.chart = chart
-            this.canvasEl = chart.get('el')
-          }
-        })
+      if (process.env.TARO_ENV === 'alipay') {
+        this.onAlipayCanvas()
+      } else if (process.env.TARO_ENV === 'weapp') {
+        this.onWxCanvas()
+      }
     }, 100)
+  }
+  // alipay canvas
+  onAlipayCanvas() {
+    const ctx = Taro.createCanvasContext(this.props.id)
+    const context = F2Context(ctx)   
+
+    const query = Taro.createSelectorQuery()
+    query.select('#' + this.props.id)
+      .boundingClientRect()
+      .exec(res => {
+        // 获取画布实际宽高
+        const { width, height } = res[0]
+        if (!width || !height) return
+
+        const config = { context, width, height }
+        const chart = this.props.onInit(config)
+        if (chart) {
+          this.chart = chart
+          this.canvasEl = chart.get('el')
+        }
+      })
+  }
+
+  // weapp canvas
+  onWxCanvas() {
+    const query = Taro.createSelectorQuery()
+
+    query.select('#' + this.props.id)
+      .fields({
+        node: true,
+        size: true
+      }).exec(res => {
+        let { node, width, height } = res[0]
+        const context = node.getContext('2d')
+        const pixelRatio = Taro.getSystemInfoSync().pixelRatio
+        // 高清设置
+        node.width = width * pixelRatio
+        node.height = height * pixelRatio
+  
+        const config = { context, width, height, pixelRatio }
+        const chart = this.props.onInit(config)
+        if (chart) {
+          this.chart = chart
+          this.canvasEl = chart.get('el')
+        }
+      })
   }
 
   touchStart(e){
@@ -85,16 +117,15 @@ export default class F2Canvas extends React.Component<propsParams> {
 
   render() {
     return (
-      <View className={this.props.className}>
-        <Canvas
-          style="width: 100%; height: 100%"
-          type="2d"
-          id={this.props.id}
-          onTouchStart={this.touchStart.bind(this)}
-          onTouchMove={this.touchMove.bind(this)}
-          onTouchEnd={this.touchEnd.bind(this)}
-        />
-      </View>
+      <Canvas
+        className={this.props.className}
+        style={this.props.style}
+        type="2d"
+        id={this.props.id}
+        onTouchStart={this.touchStart.bind(this)}
+        onTouchMove={this.touchMove.bind(this)}
+        onTouchEnd={this.touchEnd.bind(this)}
+      />
     )
   }
 }

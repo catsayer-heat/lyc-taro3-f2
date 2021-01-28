@@ -140,7 +140,7 @@ export default class Index extends Component {
     return (
       <View className='index'>
         <F2Canvas
-          className="my_canvas"
+          style="width: 100%; height: 300px;"
           onInit={this.onInit.bind(this)}
         />
       </View>
