@@ -160,6 +160,8 @@ export default class Index extends Component {
 
 [原理](https://www.yuque.com/antv/blog/bg9sxf)⬅比较详细
 
-有意愿的，还是主动去看大佬的文章吧，我个小菜鸡就不在这里多bb了。当然antv-f2中也有说，同时antv-f2目前已经帮我们做了这层操作。
+有意愿的，还是主动去看大佬的文章吧，我个小菜鸡就不在这里多bb了。
+
+当然antv-f2中也有说。↓
 
 [小程序上渲染F2](https://f2.antv.vision/zh/docs/tutorial/miniprogram)
