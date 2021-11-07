@@ -3,12 +3,19 @@ import Taro from '@tarojs/taro'
 import { Canvas } from '@tarojs/components'
 
 import { my as F2Context } from '@antv/f2-context'
+import F2 from '@antv/f2'
 
-type propsParams = {
+interface InitParams {
+  context: CanvasRenderingContext2D
+  width: number
+  height: number
+  pixelRatio?: number
+}
+interface PropsParams {
   id: string
   className: string
   style: string
-  onInit: any
+  onInit: (params: InitParams) => F2.Chart
 }
 
 function wrapEvent(e) {
@@ -29,7 +36,7 @@ function randomStr (long) {
   return string
 }
 
-export default class F2Canvas extends React.Component<propsParams> {
+export default class F2Canvas extends React.Component<PropsParams> {
   static defaultProps = {
     id: 'f2-canvas-' + randomStr(16),
     className: '',
@@ -37,22 +44,29 @@ export default class F2Canvas extends React.Component<propsParams> {
     onInit: () => {}
   }
 
-  canvasEl: any
-  chart: any
+  canvasEl: HTMLElement
+  chart: F2.Chart
 
   componentWillMount() {
     setTimeout(() => {
-      if (process.env.TARO_ENV === 'alipay') {
-        this.onAlipayCanvas()
-      } else if (process.env.TARO_ENV === 'weapp') {
-        this.onWxCanvas()
+      switch(process.env.TARO_ENV) {
+        case 'alipay':
+          this.onAlipayCanvas()
+          break
+        case 'weapp':
+        case 'qywx':
+          this.onWxCanvas()
+          break;
+        default:
+          console.error('暂未支持该平台')
       }
     }, 100)
   }
+
   // alipay canvas
   onAlipayCanvas() {
     const ctx = Taro.createCanvasContext(this.props.id)
-    const context = F2Context(ctx)   
+    const context = F2Context(ctx)
 
     const query = Taro.createSelectorQuery()
     query.select('#' + this.props.id)
@@ -71,7 +85,7 @@ export default class F2Canvas extends React.Component<propsParams> {
       })
   }
 
-  // weapp canvas
+  // wx canvas
   onWxCanvas() {
     const query = Taro.createSelectorQuery()
 
@@ -86,7 +100,7 @@ export default class F2Canvas extends React.Component<propsParams> {
         // 高清设置
         node.width = width * pixelRatio
         node.height = height * pixelRatio
-  
+
         const config = { context, width, height, pixelRatio }
         const chart = this.props.onInit(config)
         if (chart) {
@@ -99,19 +113,19 @@ export default class F2Canvas extends React.Component<propsParams> {
   touchStart(e){
     const canvasEl = this.canvasEl
     if (canvasEl) {
-      canvasEl.dispatchEvent('touchstart', wrapEvent(e))
+      canvasEl.dispatchEvent(wrapEvent(e))
     }
   }
   touchMove(e){
     const canvasEl = this.canvasEl
     if (canvasEl) {
-      canvasEl.dispatchEvent('touchmove', wrapEvent(e))
+      canvasEl.dispatchEvent(wrapEvent(e))
     }
   }
   touchEnd(e){
     const canvasEl = this.canvasEl
     if (canvasEl) {
-      canvasEl.dispatchEvent('touchend', wrapEvent(e))
+      canvasEl.dispatchEvent(wrapEvent(e))
     }
   }
 

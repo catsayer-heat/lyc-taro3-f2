@@ -131,7 +131,7 @@ export default class Index extends Component {
           return 'dash';
         }
       });
-    
+
     chart.render();
     return chart
   }
